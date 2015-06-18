@@ -1,0 +1,29 @@
+.flex-box {
+    display: -webkit-flex;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 10px;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+#searchBar {
+    background-color: red;
+    padding: 5px;
+}
+
+#datasDisplay {
+    padding: 0;
+    margin: 0;
+}
+
+#map-canvas {
+    height: 500px;
+}
+

@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Neighborhood Map</title>
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/style.css" rel="stylesheet">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+        <h1>Neighborhood Map</h1>
+
+        <!-- Search Bar -->
+        <div class="searchBar row">
+            <form id="seach" class="col-md-12">
+                <input id="srch" type="text" size="40" data-bind="textInput: srchBar" placeholder="Enter Location - Case Sensitive">
+            </form>
+        </div>
+    
+        <div class="container">    
+            <div class="dataDisplay row">
+                <div id="locations" class="locList col-md-3">
+                    <h2>Locations</h2>
+                    <ul data-bind="foreach: placeArray">
+                        <li class="highlight list" data-bind="click: $parent.listClick">
+                            <span data-bind="text: name"></span>
+                        </li>
+                    </ul>
+                </div>
+                <div id="map-canvas" class="mapStyle col-md-9">
+                </div>
+            </div>
+        </div>
+    
+        <script src="http://maps.googleapis.com/maps/api/js?libraries=places"></script>
+        <script src="js/jquery.js"></script>
+        <script src="js/knockout.js"></script>
+        <script src="js/app.js"></script>
+
+    </body>
+</html>

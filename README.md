@@ -24,7 +24,7 @@ Use of third-party libraries and APIs is a standard and acceptable practice that
 
 
 NOTES:
-> The code is started by opening Project5.html.  On load, a map of Niagara Falls will be shown with data points on the map, a list of the data points to the side of the map and a search bar.
+> The code is started by opening index.html.  On load, a map of Niagara Falls will be shown with data points on the map, a list of the data points to the side of the map and a search bar.
 
 Each of the map markers is clickable and when clicked will display a map info window the name of the location and any wikipedia link associated with that name.
 

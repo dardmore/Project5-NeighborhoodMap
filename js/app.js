@@ -32,7 +32,6 @@ var locations = [
 var map;
 
 function initializeMap () {
-console.log("initializeMap");
     // Set the map's center lat / long
     var centerLatLng = new google.maps.LatLng(43.082088, -79.072232);
     
@@ -47,7 +46,7 @@ console.log("initializeMap");
             style: google.maps.ZoomControlStyle.SMALL
         },
         mapTypeId: google.maps.MapTypeId.HYBRID
-    }
+    };
 
     var $mapElem = $('#map-canvas');
     
@@ -58,7 +57,7 @@ console.log("initializeMap");
     
     map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
     
-    if (map != undefined) {
+    if (map !== undefined) {
         clearTimeout(mapRequestTimeout);
     }
 }
@@ -70,10 +69,10 @@ function viewModel() {
     var contentArray = [];
     self.srchBar = ko.observable("");
     self.placeArray = ko.observableArray(locations);
-
+    var numLocations = locations.length;
+    
     // function to make ajax call to wikipedia to get articles
     function getWiki(i) {
-
         var $wikiElem = $('#wikipedia-links');
         var wikiURL = 'http://en.wikipedia.org/w/api.php?action=opensearch&format=json&search=' + locations[i].name + '&format=json';
         var wikiRequestTimeout = setTimeout(function() {
@@ -89,21 +88,20 @@ function viewModel() {
                 for (var j = 0; j < articleList.length; j++) {
                     articleStr = articleList[j];
                     var url = 'http://en.wikipedia.org/wiki/' + articleStr;
-                    $wikiElem.append('<li><a href="' + url + '" target="_blank">' + articleStr + '</a></li>')
-                };
+                    $wikiElem.append('<li><a href="' + url + '" target="_blank">' + articleStr + '</a></li>');
+                }
                 // Checks to see if there were any wikipedia articles found; if not display a message
                 if (articleList.length === 0) {
                     $wikiElem.text("No Wikipedia links found.");
                 }
                 clearTimeout(wikiRequestTimeout);
-            }            
+            }
         });
     }
 
     // Create Map Marker and Marker Properties for each location
     function createMapMarker(i) {
         var myLatLng = new google.maps.LatLng(locations[i].lat, locations[i].long);
-       
         // create marker settings
         var marker = new google.maps.Marker({
             position: myLatLng,
@@ -129,7 +127,7 @@ function viewModel() {
         // When marker clicked on, make marker bounce and open an infowindow
         google.maps.event.addListener(marker, 'click', function() {
             marker.setAnimation(google.maps.Animation.BOUNCE);  // Have the marker bounce
-            setTimeout(function() {marker.setAnimation(null)}, 1500);
+            setTimeout(function() {marker.setAnimation(null);}, 1500);
             infowindow.setContent(contentString);  // Set the infoWindow Content
             infowindow.open(map, marker);  // Open the infoWindow
             getWiki(i);
@@ -142,13 +140,12 @@ function viewModel() {
     }
 
     // Loop through each location and create a marker
-    for (var i = 0; i < locations.length; i++) {
+    for (var i = 0; i < numLocations; i++) {
         createMapMarker(i);
     }
 
     // Function for when text is entered into the search bar. Only show text that matches
     $("#srch").keyup(function () {
-        console.log(self.srchBar());
         if (self.srchBar()) {
             $(".list").find(":not(:contains(" + self.srchBar() + "))").parent().slideUp();
             $(".list").find(":contains(" + self.srchBar() + ")").parent().slideDown();
@@ -161,21 +158,20 @@ function viewModel() {
     // Function to be run when one of the list items is clicked
     self.listClick = function(place) {
         var marker;
-       
-        for (j = 0; j < locations.length; j++) {
+        for (j = 0; j < numLocations; j++) {
             if (place.name === locations[j].name) {
                 marker = mapMarkers[j];
                 marker.setAnimation(google.maps.Animation.BOUNCE);  // Have the marker bounce
-                setTimeout(function() {marker.setAnimation(null)}, 1500);
+                setTimeout(function() {marker.setAnimation(null);}, 1500);
                 infowindow.setContent(contentArray[j]);
                 infowindow.open(map, mapMarkers[j]);
                 getWiki(j);
             }
         }
-    }   
+    };
+}
 
-};
-
+//window.addEventListener('load', initializeMap);
 initializeMap();
 ko.applyBindings(new viewModel());
 
@@ -186,5 +182,3 @@ $('.highlight').hover(function() {
 }, function() {
     $(this).css("background-color", "white");
 });
-
-
